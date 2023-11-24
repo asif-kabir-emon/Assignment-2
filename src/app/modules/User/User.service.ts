@@ -4,10 +4,10 @@ import { User } from './User.model';
 
 const createUserDB = async (user: TUser) => {
     if (await User.isUserExist(user.userId)) {
-        throw new Error('User not found');
+        throw new Error('User already exist with this userId');
     }
     if (await User.isUsernameExist(user.username)) {
-        throw new Error('User not found');
+        throw new Error('User already exist with this username');
     }
     const result = await User.create(user);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

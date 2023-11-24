@@ -56,8 +56,8 @@ const getUserById = async (req: Request, res: Response) => {
             success: false,
             message: error.message || 'Something went wrong',
             error: {
-                code: 404,
-                description: error.message + '!',
+                "code": 404,
+                "description": "User not found!"
             },
         });
     }
@@ -79,8 +79,8 @@ const updateUserById = async (req: Request, res: Response) => {
             success: false,
             message: error.message || 'Something went wrong',
             error: {
-                code: 404,
-                description: error.message + '!',
+                "code": 404,
+                "description": "User not found!"
             },
         });
     }
@@ -101,8 +101,8 @@ const deleteUserById = async (req: Request, res: Response) => {
             success: false,
             message: error.message || 'Something went wrong',
             error: {
-                code: 404,
-                description: error.message + '!',
+                "code": 404,
+                "description": "User not found!"
             },
         });
     }
@@ -128,8 +128,8 @@ const addOrderToUser = async (req: Request, res: Response) => {
             success: false,
             message: error.message || 'Something went wrong',
             error: {
-                code: 404,
-                description: error.message + '!',
+                "code": 404,
+                "description": "User not found!"
             },
         });
     }
@@ -150,8 +150,8 @@ const getAllOrdersByUserId = async (req: Request, res: Response) => {
             success: false,
             message: error.message || 'Something went wrong',
             error: {
-                code: 404,
-                description: error.message + '!',
+                "code": 404,
+                "description": "User not found!"
             },
         });
     }
@@ -173,8 +173,8 @@ const totalPriceOfAllOrdersByUserId = async (req: Request, res: Response) => {
             success: false,
             message: error.message || 'Something went wrong',
             error: {
-                code: 404,
-                description: error.message + '!',
+                "code": 404,
+                "description": "User not found!"
             },
         });
     }
