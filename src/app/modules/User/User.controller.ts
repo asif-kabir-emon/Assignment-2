@@ -109,9 +109,33 @@ const addOrderToUser = async (req: Request, res: Response) => {
         const orderData = req.body;
         const parseData = UserValidationSchema.OrderSchema.parse(orderData);
         const result = await UserService.addOrderToUserDB(userId, parseData);
+        if (result === null) {
+            throw new Error('User not found');
+        }
         res.status(200).send({
             success: true,
             message: 'Order added successfully!',
+            data: null,
+        });
+    } catch (error: any) {
+        res.status(404).send({
+            success: false,
+            message: error.message || 'Something went wrong',
+            error: {
+                code: 404,
+                description: error.message + '!',
+            },
+        });
+    }
+}
+
+const getAllOrdersByUserId = async (req: Request, res: Response) => {
+    try {
+        const userId = Number(req.params.userId);
+        const result = await UserService.getAllOrdersByUserIdDB(userId);
+        res.status(200).send({
+            success: true,
+            message: 'Orders fetched successfully!',
             data: result,
         });
     } catch (error: any) {
@@ -126,6 +150,7 @@ const addOrderToUser = async (req: Request, res: Response) => {
     }
 }
 
+
 export const UserController = {
     createUser,
     getAllUsers,
@@ -133,4 +158,5 @@ export const UserController = {
     updateUserById,
     deleteUserById,
     addOrderToUser,
+    getAllOrdersByUserId,
 };
