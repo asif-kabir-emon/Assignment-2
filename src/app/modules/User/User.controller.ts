@@ -127,7 +127,7 @@ const addOrderToUser = async (req: Request, res: Response) => {
             },
         });
     }
-}
+};
 
 const getAllOrdersByUserId = async (req: Request, res: Response) => {
     try {
@@ -136,6 +136,29 @@ const getAllOrdersByUserId = async (req: Request, res: Response) => {
         res.status(200).send({
             success: true,
             message: 'Orders fetched successfully!',
+            data: result,
+        });
+    } catch (error: any) {
+        res.status(404).send({
+            success: false,
+            message: error.message || 'Something went wrong',
+            error: {
+                code: 404,
+                description: error.message + '!',
+            },
+        });
+    }
+};
+
+const totalPriceOfAllOrdersByUserId = async (req: Request, res: Response) => {
+    try {
+        const userId = Number(req.params.userId);
+        const result = await UserService.totalPriceOfAllOrdersByUserIdDB(
+            userId,
+        );
+        res.status(200).send({
+            success: true,
+            message: 'Total price fetched successfully!',
             data: result,
         });
     } catch (error: any) {
@@ -159,4 +182,5 @@ export const UserController = {
     deleteUserById,
     addOrderToUser,
     getAllOrdersByUserId,
+    totalPriceOfAllOrdersByUserId,
 };

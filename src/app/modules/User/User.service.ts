@@ -49,11 +49,11 @@ const addOrderToUserDB = async (userId: number, orderData: TOrders) => {
         throw new Error('User not found');
     }
     const result = await User.findOneAndUpdate(
-        { userId: userId }, 
+        { userId: userId },
         { $push: { orders: orderData } },
-        { new: true }
+        { new: true },
     );
-    
+
     return result;
 };
 
@@ -61,10 +61,43 @@ const getAllOrdersByUserIdDB = async (userId: number) => {
     if ((await User.isUserExist(userId)) === null) {
         throw new Error('User not found');
     }
-    const result = await User.findOne({ userId: userId }, { orders: 1, _id: 0 });
+    const result = await User.findOne(
+        { userId: userId },
+        { orders: 1, _id: 0 },
+    );
     return result;
-}
+};
 
+const totalPriceOfAllOrdersByUserIdDB = async (userId: number) => {
+    if ((await User.isUserExist(userId)) === null) {
+        throw new Error('User not found');
+    }
+    const result = await User.aggregate([
+        {
+            $match: { userId: userId },
+        },
+        {
+            $unwind: '$orders',
+        },
+        {
+            $group: {
+                _id: '$userId',
+                totalPrice: {
+                    $sum: {
+                        $multiply: ['$orders.price', '$orders.quantity'],
+                    },
+                },
+            },
+        },
+        {
+            $project: {
+                _id: 0,
+                totalPrice: 1,
+            },
+        }
+    ]);
+    return result[0];
+}
 
 export const UserService = {
     createUserDB,
@@ -74,4 +107,5 @@ export const UserService = {
     deleteUserByIdDB,
     addOrderToUserDB,
     getAllOrdersByUserIdDB,
+    totalPriceOfAllOrdersByUserIdDB,
 };
