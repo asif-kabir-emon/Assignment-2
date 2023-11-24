@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import { Model } from 'mongoose';
 
 export interface TUserFullName {
     firstName: string;
@@ -27,4 +29,8 @@ export interface TUser {
     hobbies: string[];
     address: TAddress;
     orders?: TOrders[];
+}
+
+export interface UserModel extends Model<TUser> {
+    isUserExist(userId: number): Promise<TUser | null>;
 }
