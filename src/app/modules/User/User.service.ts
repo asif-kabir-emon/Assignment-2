@@ -3,6 +3,12 @@ import { TOrders, TUser } from './User.interface';
 import { User } from './User.model';
 
 const createUserDB = async (user: TUser) => {
+    if (await User.isUserExist(user.userId)) {
+        throw new Error('User not found');
+    }
+    if (await User.isUsernameExist(user.username)) {
+        throw new Error('User not found');
+    }
     const result = await User.create(user);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...data } = result.toObject();

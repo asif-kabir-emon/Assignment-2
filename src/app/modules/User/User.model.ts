@@ -122,4 +122,9 @@ UserSchema.statics.isUserExist = async function (userId: number) {
     return result;
 };
 
+UserSchema.statics.isUsernameExist = async function (username: string) {
+    const result = await User.findOne({ username: username });
+    return result;
+};
+
 export const User = model<TUser, UserModel>('User', UserSchema);

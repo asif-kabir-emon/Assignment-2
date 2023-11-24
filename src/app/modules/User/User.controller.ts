@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { UserService } from './User.service';
 import { UserValidationSchema } from './User.validation';
 
+// Controller for creating a new user
 const createUser = async (req: Request, res: Response) => {
     try {
         const studentData = req.body;
@@ -22,6 +23,7 @@ const createUser = async (req: Request, res: Response) => {
     }
 };
 
+// Controller for fetching all users
 const getAllUsers = async (req: Request, res: Response) => {
     try {
         const result = await UserService.getAllUsersDB();
@@ -39,6 +41,7 @@ const getAllUsers = async (req: Request, res: Response) => {
     }
 };
 
+// Controller for fetching a user by id
 const getUserById = async (req: Request, res: Response) => {
     try {
         const userId = Number(req.params.userId);
@@ -60,6 +63,7 @@ const getUserById = async (req: Request, res: Response) => {
     }
 };
 
+// Controller for updating a user by id
 const updateUserById = async (req: Request, res: Response) => {
     try {
         const userId = Number(req.params.userId);
@@ -82,6 +86,7 @@ const updateUserById = async (req: Request, res: Response) => {
     }
 };
 
+// Controller for deleting a user by id
 const deleteUserById = async (req: Request, res: Response) => {
     try {
         const userId = Number(req.params.userId);
@@ -103,6 +108,7 @@ const deleteUserById = async (req: Request, res: Response) => {
     }
 };
 
+// Controller for adding an order to a user
 const addOrderToUser = async (req: Request, res: Response) => {
     try {
         const userId = Number(req.params.userId);
@@ -129,6 +135,7 @@ const addOrderToUser = async (req: Request, res: Response) => {
     }
 };
 
+// Controller for fetching all orders of a user
 const getAllOrdersByUserId = async (req: Request, res: Response) => {
     try {
         const userId = Number(req.params.userId);
@@ -150,6 +157,7 @@ const getAllOrdersByUserId = async (req: Request, res: Response) => {
     }
 };
 
+// Controller for fetching total price of all orders of a user
 const totalPriceOfAllOrdersByUserId = async (req: Request, res: Response) => {
     try {
         const userId = Number(req.params.userId);
