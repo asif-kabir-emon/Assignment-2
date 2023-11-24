@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { TUser } from './User.interface';
+import { TOrders, TUser } from './User.interface';
 import { User } from './User.model';
 
 const createUserDB = async (user: TUser) => {
@@ -18,7 +18,7 @@ const getAllUsersDB = async () => {
 };
 
 const getUserByIdDB = async (userId: number) => {
-    if(await User.isUserExist(userId) === null) {
+    if ((await User.isUserExist(userId)) === null) {
         throw new Error('User not found');
     }
     const result = await User.findOne({ userId: userId }, { password: 0 });
@@ -26,7 +26,7 @@ const getUserByIdDB = async (userId: number) => {
 };
 
 const updateUserByIdDB = async (userId: number, userData: TUser) => {
-    if(await User.isUserExist(userId) === null) {
+    if ((await User.isUserExist(userId)) === null) {
         throw new Error('User not found');
     }
     await User.updateOne({ userId: userId }, userData);
@@ -35,7 +35,7 @@ const updateUserByIdDB = async (userId: number, userData: TUser) => {
 };
 
 const deleteUserByIdDB = async (userId: number) => {
-    if(await User.isUserExist(userId) === null) {
+    if ((await User.isUserExist(userId)) === null) {
         throw new Error('User not found');
     }
     const result = await User.deleteMany({ userId: userId });
@@ -44,10 +44,24 @@ const deleteUserByIdDB = async (userId: number) => {
     }
 };
 
+const addOrderToUserDB = async (userId: number, orderData: TOrders) => {
+    if ((await User.isUserExist(userId)) === null) {
+        throw new Error('User not found');
+    }
+    const result = await User.findOneAndUpdate(
+        { userId: userId }, 
+        { $push: { orders: orderData } },
+        { new: true }
+    );
+    
+    return result;
+};
+
 export const UserService = {
     createUserDB,
     getAllUsersDB,
     getUserByIdDB,
     updateUserByIdDB,
     deleteUserByIdDB,
+    addOrderToUserDB,
 };

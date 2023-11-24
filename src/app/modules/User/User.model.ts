@@ -51,57 +51,54 @@ const OrderSchema = new Schema<TOrders>({
     },
 });
 
-const UserSchema = new Schema<TUser>(
-    {
-        userId: {
-            type: Number,
-            required: true,
-            unique: true,
-        },
-        username: {
-            type: String,
-            required: true,
-            unique: true,
-        },
-        password: {
-            type: String,
-            required: true,
-            minlength: 8,
-        },
-        fullName: {
-            type: UserFullNameSchema,
-            required: true,
-        },
-        age: {
-            type: Number,
-            required: true,
-        },
-        email: {
-            type: String,
-            required: true,
-        },
-        isActive: {
-            type: Boolean,
-            default: true,
-        },
-        hobbies: [
-            {
-                type: String,
-                required: true,
-            },
-        ],
-        address: {
-            type: AddressSchema,
-            required: true,
-        },
-        orders: [
-            {
-                type: OrderSchema,
-            },
-        ],
+const UserSchema = new Schema<TUser>({
+    userId: {
+        type: Number,
+        required: true,
+        unique: true,
     },
-);
-
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 8,
+    },
+    fullName: {
+        type: UserFullNameSchema,
+        required: true,
+    },
+    age: {
+        type: Number,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
+    isActive: {
+        type: Boolean,
+        default: true,
+    },
+    hobbies: [
+        {
+            type: String,
+            required: true,
+        },
+    ],
+    address: {
+        type: AddressSchema,
+        required: true,
+    },
+    orders: [
+        {
+            type: OrderSchema,
+        },
+    ],
+});
 
 UserSchema.pre('save', async function (next) {
     const user = this;
@@ -119,7 +116,6 @@ UserSchema.pre('updateOne', async function (next) {
     );
     next();
 });
-
 
 UserSchema.statics.isUserExist = async function (userId: number) {
     const result = await User.findOne({ userId: userId });

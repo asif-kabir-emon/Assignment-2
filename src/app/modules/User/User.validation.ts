@@ -30,4 +30,9 @@ const UserSchema = z.object({
     orders: z.array(OrderSchema).optional(),
 });
 
-export const UserValidationSchema = UserSchema;
+export const UserValidationSchema = {
+    UserSchema,
+    UserFullNameSchema,
+    AddressSchema,
+    OrderSchema,
+};

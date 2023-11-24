@@ -6,7 +6,7 @@ import { UserValidationSchema } from './User.validation';
 const createUser = async (req: Request, res: Response) => {
     try {
         const studentData = req.body;
-        const parseData = UserValidationSchema.parse(studentData);
+        const parseData = UserValidationSchema.UserSchema.parse(studentData);
         const result = await UserService.createUserDB(parseData);
         res.status(200).send({
             success: true,
@@ -54,7 +54,7 @@ const getUserById = async (req: Request, res: Response) => {
             message: error.message || 'Something went wrong',
             error: {
                 code: 404,
-                description: error.message + "!",
+                description: error.message + '!',
             },
         });
     }
@@ -76,7 +76,7 @@ const updateUserById = async (req: Request, res: Response) => {
             message: error.message || 'Something went wrong',
             error: {
                 code: 404,
-                description: error.message + "!",
+                description: error.message + '!',
             },
         });
     }
@@ -97,11 +97,34 @@ const deleteUserById = async (req: Request, res: Response) => {
             message: error.message || 'Something went wrong',
             error: {
                 code: 404,
-                description: error.message + "!",
+                description: error.message + '!',
             },
         });
     }
 };
+
+const addOrderToUser = async (req: Request, res: Response) => {
+    try {
+        const userId = Number(req.params.userId);
+        const orderData = req.body;
+        const parseData = UserValidationSchema.OrderSchema.parse(orderData);
+        const result = await UserService.addOrderToUserDB(userId, parseData);
+        res.status(200).send({
+            success: true,
+            message: 'Order added successfully!',
+            data: result,
+        });
+    } catch (error: any) {
+        res.status(404).send({
+            success: false,
+            message: error.message || 'Something went wrong',
+            error: {
+                code: 404,
+                description: error.message + '!',
+            },
+        });
+    }
+}
 
 export const UserController = {
     createUser,
@@ -109,4 +132,5 @@ export const UserController = {
     getUserById,
     updateUserById,
     deleteUserById,
+    addOrderToUser,
 };
