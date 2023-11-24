@@ -18,7 +18,7 @@ const getAllUsersDB = async () => {
 };
 
 const getUserByIdDB = async (userId: number) => {
-    const result = await User.find({ userId: userId });
+    const result = await User.findOne({ userId: userId }, { password: 0 });
     return result;
 };
 

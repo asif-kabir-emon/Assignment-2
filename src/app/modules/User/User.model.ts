@@ -116,4 +116,10 @@ UserSchema.post('save', async function (doc, next) {
     next();
 });
 
+
+UserSchema.statics.isUserExist = async function (userId: number) {
+    const result = await User.findOne({ userId: userId });
+    return result;
+};
+
 export const User = model<TUser, UserModel>('User', UserSchema);
