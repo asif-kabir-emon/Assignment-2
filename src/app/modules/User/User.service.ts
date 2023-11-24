@@ -18,6 +18,9 @@ const getAllUsersDB = async () => {
 };
 
 const getUserByIdDB = async (userId: number) => {
+    if(await User.isUserExist(userId) === null) {
+        throw new Error('User not found');
+    }
     const result = await User.findOne({ userId: userId }, { password: 0 });
     return result;
 };
