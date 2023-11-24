@@ -26,8 +26,12 @@ const getUserByIdDB = async (userId: number) => {
 };
 
 const updateUserByIdDB = async (userId: number, userData: TUser) => {
-    const result = await User.updateOne({ userId: userId }, userData);
-    return result;
+    if(await User.isUserExist(userId) === null) {
+        throw new Error('User not found');
+    }
+    await User.updateOne({ userId: userId }, userData);
+    const findUser = await User.findOne({ userId: userId }, { password: 0 });
+    return findUser;
 };
 
 const deleteUserByIdDB = async (userId: number) => {

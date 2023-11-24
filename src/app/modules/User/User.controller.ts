@@ -71,10 +71,13 @@ const updateUserById = async (req: Request, res: Response) => {
             data: result,
         });
     } catch (error: any) {
-        res.status(500).send({
+        res.status(404).send({
             success: false,
             message: error.message || 'Something went wrong',
-            error: error,
+            error: {
+                code: 404,
+                description: error.message + "!",
+            },
         });
     }
 };

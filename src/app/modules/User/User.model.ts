@@ -111,8 +111,12 @@ UserSchema.pre('save', async function (next) {
     );
     next();
 });
-
-UserSchema.post('save', async function (doc, next) {
+UserSchema.pre('updateOne', async function (next) {
+    const update = this.getUpdate();
+    update.password = await bcrypt.hash(
+        update.password,
+        Number(config.bcrypt_salt_rounds),
+    );
     next();
 });
 
