@@ -94,10 +94,10 @@ const totalPriceOfAllOrdersByUserIdDB = async (userId: number) => {
                 _id: 0,
                 totalPrice: 1,
             },
-        }
+        },
     ]);
     return result[0];
-}
+};
 
 export const UserService = {
     createUserDB,
